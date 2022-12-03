@@ -142,8 +142,27 @@ class PhongTroController extends Controller
      * @param  \App\Models\phongTroM  $phongTroM
      * @return \Illuminate\Http\Response
      */
-    public function destroy(phongTroM $phongTroM)
+    public function destroy(phongTroM $phongTroM,Request $request)
     {
-        //
+        $validation = Validator::make($request->all(),
+        [
+            'id' =>'required|numeric',
+            
+        ],
+        [
+            'id.required'=>'Thiếu mã phòng',            
+            'id.numeric'=>'Mã phòng không hợp lệ',            
+                     
+        ]);
+        if($validation->fails()){
+            return response()->json(['check'=>false,'message'=>$validation->errors()]);
+        }else{
+            $image=phongTroM::where('id','=',$request->id)->value('image');
+            if (file_exists(public_path('images/' . $image))) {
+                unlink(public_path('images/' . $image));
+            }
+            phongTroM::where('id','=',$request->id)->delete();
+            return response()->json(['check'=>true]);
+        }
     }
 }
