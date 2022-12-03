@@ -98,7 +98,7 @@ class PhongTroController extends Controller
      */
     public function all(Request $request,QuanM $QuanM,phongTroM $phongTroM)
     {
-        $result = DB::Table('roomtable')->join('quantable','roomtable.idQuan','=','quantable.id')->select('roomtable.id as idRoome','address','price','phone','image','dientich','mota','districtname','quantable.id as idQuan','roomtable.created_at as created_at')->get();
+        $result = DB::Table('roomtable')->join('quantable','roomtable.idQuan','=','quantable.id')->select('roomtable.id as idRoome','roomtable.roomname','address','price','phone','image','dientich','mota','districtname','quantable.id as idQuan','roomtable.created_at as created_at')->get();
         return response()->json($result);
     }
 

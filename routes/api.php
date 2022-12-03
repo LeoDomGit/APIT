@@ -42,4 +42,4 @@ Route::post('/deleteQuan',[QuanController::class,'destroy']);
 
 // ==============================
 Route::post('/addPhong',[PhongTroController::class,'create']);
-Route::get('/allPhong',[PhongTroController::class,'create']);
+Route::get('/allPhong',[PhongTroController::class,'all']);
