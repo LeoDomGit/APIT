@@ -2,7 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\ThemLoaiTKController;
+use App\Http\Controllers\API\LoaiTKController;
+use App\Http\Controllers\API\UserController;
+
 
 
 /*
@@ -20,8 +22,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/themtk',[ThemLoaiTKController::class,'themtk']);
-Route::post('/them',[ThemLoaiTKController::class,'createthem']);
+Route::get('/themtk',[LoaiTKController::class,'themtk']);
+Route::get('/allLTK',[LoaiTKController::class,'all']);
+Route::post('/them',[LoaiTKController::class,'createthem']);
 
-Route::get('/dangntk',[ThemLoaiTKController::class,'dangntk']);
-Route::post('/dang',[ThemLoaiTKController::class,'createdang']);
+// ==============================================
+
+Route::post('/addUser',[UserController::class,'create']);
+Route::get('/allUser',[UserController::class,'all']);

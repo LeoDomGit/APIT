@@ -4,13 +4,24 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\ThemLoaiTK;
+use App\Models\LoaiTKM;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
 
 class LoaiTKController extends Controller
 {
+
+        /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function all(Request $request,LoaiTKM $LoaiTKM)
+    {
+        $result = LoaiTKM::where('status','=',1)->get();
+        return response()->json($result);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -26,7 +37,7 @@ class LoaiTKController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function createthem(Request $request,ThemLoaiTK $ThemLoaiTK )
+    public function createthem(Request $request,LoaiTKM $LoaiTKM )
     {
         $validation = Validator::make($request->all(),
         [
@@ -41,9 +52,9 @@ class LoaiTKController extends Controller
         if($validation->fails()){
             return response()->json(['check'=>false,'message'=>$validation->errors()]);
         }else{
-            $check = ThemLoaiTK::where('name','=',$request->name)->count('id');
+            $check = LoaiTKM::where('name','=',$request->name)->count('id');
                 if($check==0){
-                    ThemLoaiTK::create([
+                    LoaiTKM::create([
                         'name' => $request->name,
                         'created_at' => now()]);
                 } 
