@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\LoaiTKController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\QuanController;
+use App\Http\Controllers\API\PhongTroController;
+
 
 
 
@@ -38,3 +40,5 @@ Route::GET('/allQuan',[QuanController::class,'all']);
 Route::post('/editQuan',[QuanController::class,'edit']);
 Route::post('/deleteQuan',[QuanController::class,'destroy']);
 
+// ==============================
+Route::post('/addPhong',[PhongTroController::class,'create']);
