@@ -9,6 +9,38 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 class QuanController extends Controller
 {
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Request $request,QuanM $QuanM)
+    {
+        $validation = Validator::make($request->all(),
+        [
+            
+            'quan' =>'required',
+            'id'=>'required|numeric',
+        ],
+        [
+            'id.required' =>'Thiếu mã quận',   
+            'id.numeric' =>'Mã quận không hợp lệ',   
+            'quan.required'=>'Thiếu tên quận',            
+
+        ]);
+        if($validation->fails()){
+            return response()->json(['check'=>false,'message'=>$validation->errors()]);
+        }else{
+            $check = QuanM::where('districtname','=',$request->quan)->count('id');
+            if($check==0){
+                QuanM::where('id','=',$request->id)->update(['districtname'=>$request->quan,'updated_at'=>now()]);
+                return response()->json(['check'=>true]);
+            }else{
+                return response()->json(['check'=>false,'message'=>'Quận đã tồn tại']);
+            }
+        }
+    }
     /**
      * Display a listing of the resource.
      *
@@ -78,10 +110,10 @@ class QuanController extends Controller
      * @param  \App\Models\QuanM  $quanM
      * @return \Illuminate\Http\Response
      */
-    public function edit(QuanM $quanM)
-    {
-        //
-    }
+    // public function edit(QuanM $quanM)
+    // {
+    //     //
+    // }
 
     /**
      * Update the specified resource in storage.
@@ -101,8 +133,29 @@ class QuanController extends Controller
      * @param  \App\Models\QuanM  $quanM
      * @return \Illuminate\Http\Response
      */
-    public function destroy(QuanM $quanM)
+    public function destroy(Request $request,QuanM $quanM)
     {
-        //
+        $validation = Validator::make($request->all(),
+        [
+            
+            'id' =>'required|numeric',
+        ],
+        [
+                        
+            'id.required'=>'Thiếu mã quận',   
+            'id.numeric'=>'Mã quận không hợp lệ',            
+
+        ]);
+        if($validation->fails()){
+            return response()->json(['check'=>false,'message'=>$validation->errors()]);
+        }else{
+            $check = DB::Table('roomtable')->where('idQuan','=',$request->id)->count('id');
+            if($check==0){
+                QuanM::where('id','=',$request->id)->delete();
+                return response()->json(['check'=>true]);
+            }else{
+                return response()->json(['check'=>false,'message'=>'Có phòng trọ trong quận']);
+            }
+        }
     }
 }

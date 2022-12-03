@@ -35,3 +35,6 @@ Route::get('/allUser',[UserController::class,'all']);
 
 Route::post('/addQuan',[QuanController::class,'create']);
 Route::GET('/allQuan',[QuanController::class,'all']);
+Route::post('/editQuan',[QuanController::class,'edit']);
+Route::post('/deleteQuan',[QuanController::class,'destroy']);
+
