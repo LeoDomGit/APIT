@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\LoaiTKController;
 use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\API\QuanController;
 
 
 
@@ -30,3 +31,7 @@ Route::post('/them',[LoaiTKController::class,'createthem']);
 
 Route::post('/addUser',[UserController::class,'create']);
 Route::get('/allUser',[UserController::class,'all']);
+// ==============================
+
+Route::post('/addQuan',[QuanController::class,'create']);
+Route::GET('/allQuan',[QuanController::class,'all']);
