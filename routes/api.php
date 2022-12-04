@@ -33,6 +33,8 @@ Route::post('/them',[LoaiTKController::class,'createthem']);
 
 Route::post('/addUser',[UserController::class,'create']);
 Route::get('/allUser',[UserController::class,'all']);
+Route::post('/switchUser',[UserController::class,'switch']);
+
 // ==============================
 
 Route::post('/addQuan',[QuanController::class,'create']);
