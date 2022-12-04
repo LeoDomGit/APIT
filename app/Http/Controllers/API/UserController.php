@@ -89,6 +89,39 @@ class UserController extends Controller
 
         }
     }
+
+        /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
+    public function checkLogin(Request $request, UserM $UserM)
+    {
+        $validation = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'image' => 'required',
+            'name'=>'required',
+        ],[
+            'email.required'=>'Thiếu email',
+            'email.email'=>'Email không đúng định dạng',
+            'image.required'=>'Thiếu hình ảnh',
+            'name.required'=>'Thiếu name',
+            
+        ]);
+        if ($validation->fails()) {
+            return response()->json(['check' => false,'message'=>$validation->errors()]);
+        }else{
+            $check = UserM::where('status','=',1)->where('email','=',$request->email)->count();
+            if($check!=0){
+                userM::where('status','=',1)->where('email','=',$request->email)->update(['name'=>$request->name,'image'=>$request->image]);
+                return response()->json(['check'=>true]);
+            }else{
+                return response()->json(['check'=>false]);
+            }
+        }
+    }
     /**
      * Store a newly created resource in storage.
      *
