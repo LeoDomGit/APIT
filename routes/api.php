@@ -34,6 +34,7 @@ Route::middleware(['CheckRoute'])->group(function () {
     Route::post('/addUser',[UserController::class,'create']);
     Route::get('/allUser',[UserController::class,'all']);
     Route::post('/switchUser',[UserController::class,'switch']);
+    Route::post('/editUser',[UserController::class,'edit']);
     Route::post('/checkUserLogin',[UserController::class,'checkLogin']);
     // ==============================
     

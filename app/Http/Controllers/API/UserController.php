@@ -150,9 +150,45 @@ class UserController extends Controller
      * @param  \App\Models\UserM  $userM
      * @return \Illuminate\Http\Response
      */
-    public function edit(UserM $userM)
+    public function edit(UserM $userM,Request $request,LoaiTKM $LoaiTKM)
     {
-        //
+        $validation = Validator::make($request->all(), [
+            'id' => 'required|numeric',
+            'email' => 'required|email',
+        ],[
+            'id.required'=>'Thiếu mã tài khoản',
+            'id.numeric'=>'Thiếu mã tài khoản',
+            'email.required'=>'Thiếu email',
+            'email.email'=>'Email không đúng định dạng',
+        ]);
+        if ($validation->fails()) {
+            return response()->json(['check' => false,'message'=>$validation->errors()]);
+        }else{
+            if(isset($request->idLTK)){
+                if(is_nan($request->idLTK)==true){
+                    return response()->json(['check'=>false,'message'=>"Mã Loại tài khoản không hợp lệ"]);
+                }else{
+                    $check = UserM::where('id','!=',$request->id)->where('email','=',$request->email)->count();
+                    if($check!=0){
+                        return response()->json(['check'=>false,'message'=>"Email đã được đăng ký ở tài khoản khác"]);
+                    }else{
+                        UserM::where('id','=',$request->id)->update(['email'=>$request->email,'idRole'=>$request->idLTK,'updated_at'=>now()]);
+                        return response()->json(['check'=>true]);
+                    }
+                }
+            }else{
+                $check = UserM::where('id','!=',$request->id)->where('email','=',$request->email)->count();
+                if($check!=0){
+                    return response()->json(['check'=>false,'message'=>"Email đã được đăng ký ở tài khoản khác"]);
+
+                }else{
+                UserM::where('id','=',$request->id)->update(['email'=>$request->email,'updated_at'=>now()]);
+                return response()->json(['check'=>true]);
+
+                }
+            }
+
+        }
     }
 
     /**
@@ -162,7 +198,7 @@ class UserController extends Controller
      * @param  \App\Models\UserM  $userM
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, UserM $userM)
+    public function update(Request $request, UserM $userM,)
     {
         //
     }
