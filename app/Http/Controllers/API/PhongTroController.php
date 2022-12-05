@@ -15,9 +15,9 @@ class PhongTroController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request,QuanM $QuanM,phongTroM $phongTroM)
     {
-        //
+        $result = DB::Table('roomtable')->join('quantable','roomtable.idQuan','quantable.id')->where('roomtable.idQuan','=',$request->id)->get('quantable.districtname as distrName',['*']);
     }
 
     /**
