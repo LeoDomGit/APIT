@@ -35,6 +35,7 @@ Route::middleware(['CheckRoute'])->group(function () {
     Route::get('/allUser',[UserController::class,'all']);
     Route::post('/switchUser',[UserController::class,'switch']);
     Route::post('/editUser',[UserController::class,'edit']);
+    Route::post('/deleteUser',[UserController::class,'destroy']);
     Route::post('/checkUserLogin',[UserController::class,'checkLogin']);
     // ==============================
     
@@ -49,6 +50,5 @@ Route::middleware(['CheckRoute'])->group(function () {
     Route::post('/deletePhong',[PhongTroController::class,'destroy']);
     Route::post('/getSingleP',[PhongTroController::class,'single']);
     Route::post('/editPhong',[PhongTroController::class,'edit']);
-    
 });
 

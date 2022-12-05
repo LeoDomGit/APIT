@@ -209,8 +209,19 @@ class UserController extends Controller
      * @param  \App\Models\UserM  $userM
      * @return \Illuminate\Http\Response
      */
-    public function destroy(UserM $userM)
+    public function destroy(UserM $userM,Request $request)
     {
-        //
+        $validation = Validator::make($request->all(), [
+            'id' => 'required|numeric',
+        ],[
+            'id.required'=>'Thiếu mã tài khoản',
+            'id.numeric'=>'Thiếu mã tài khoản',
+        ]);
+        if ($validation->fails()) {
+            return response()->json(['check' => false,'message'=>$validation->errors()]);
+        }else{
+            UserM::where('id','=',$request->id)->delete();
+            return response()->json(['check' => true]);
+        }
     }
 }
